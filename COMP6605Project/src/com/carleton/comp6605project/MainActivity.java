@@ -1,22 +1,35 @@
 package com.carleton.comp6605project;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 
 public class MainActivity extends Activity {
 
+	private DrawView drawView;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+		drawView = new DrawView(this);
+		drawView.setBackgroundColor(Color.BLACK);
+		setContentView(drawView);
 
+		drawView.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getX() > drawView.getWidth() / 2) {
+					drawView.setBackgroundColor(Color.GREEN);
+				} else {
+					drawView.setBackgroundColor(Color.WHITE);
+				}
+
+				return true;
+			}
+		});
+	}
 }
